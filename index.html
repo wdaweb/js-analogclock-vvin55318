@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+        *{
+            margin:0;
+        }
+
+        body{
+            width:100vw;
+            height:100vh;
+            background-image:url('mido.svg');
+            background-size:710px;
+            background-repeat:no-repeat;
+            background-position:50% ;
+            background-attachment:local;
+            background-color:#aaa;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        #bigCircle{
+            width:510px;
+            height:510px;
+            background:#182a4e;
+            border-radius:50%;
+            position:relative;
+            top:-4%;
+            left:-1%;
+        }
+
+        #smCircle{
+            width:180px;
+            height:180px;
+            background:#eee;
+            border:0.5px solid #333333;
+            border-radius:50%;
+            position:absolute;
+            left:50%;
+            top:60%;
+            transform:translateX(-50%);
+        }
+
+        #cenAxis{
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            width:20px;
+            height:20px;
+            background:#ecc1a1;
+            border-radius:50%;
+
+
+        }
+
+        .jhour{
+            width:16px;
+            height:500px;
+            background-image:url("images/mhour.png");
+            background-size:cover;
+            position:absolute;
+            left:calc(50% - 8px);
+            animation:j_h 43200s infinite linear;   
+        }
+    
+        .jmin{
+            width:16px;
+            height:500px;
+            background-image:url("images/mmin.png");
+            background-size:cover;
+            position:absolute;
+            left:calc(50% - 8px);
+            animation:j_m 3600s infinite linear;
+        }
+        
+        .jsec{
+            width:12px;
+            height:180px;
+            background-image:url("images/jsec.png");
+            position: absolute;
+            left:calc(50% - 6px);
+            animation: j_s 60s infinite linear;
+        }
+        .nmb{
+            position:absolute;
+        }
+
+
+
+
+ 
+        .smpos_60{
+            font-size:24px;
+            left:calc(50% - 12px);
+            top:2px;
+        }
+
+        .smpos_30{
+            font-size:24px;
+            left:calc(50% - 12px);
+            bottom:2px;
+        }
+        .btn_ctl{
+            font-size:10px;
+            position:absolute;
+            left:calc(50% - 21.48px);
+            top:calc(50% + 26px)
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="bigCircle">
+        <div id="cenAxis"></div>
+        <div id="smCircle">
+            <span class="nmb smpos_60">60</span>
+            <span class="nmb smpos_30">30</span>
+            <div class="jsec qsec"></div>
+        </div>
+        <!-- <button class="btn_ctl" onclick="ctl(this)">STOP</button> -->
+        <div class="jmin qmin"></div>
+        <div class="jhour qhour"></div>
+    </div>
+
+    <script>
+        // var btn=document.
+        
+
+            function quartz(){
+                var time=new Date();
+                var pos_s=time.getSeconds();
+                var pos_m=time.getMinutes();
+                var pos_h=time.getHours();
+                var x=pos_s * 6;
+                var y=pos_m * 6 + pos_s * 0.1;
+                var z=pos_h * 30 + pos_m * 0.5;
+                document.getElementsByClassName('qsec')[0].style.transform=`rotate(${x}deg)`;
+                document.getElementsByClassName('qmin')[0].style.transform=`rotate(${y}deg)`;
+                document.getElementsByClassName('qhour')[0].style.transform=`rotate(${z}deg)`;
+            };
+        quartz(); 
+        var loop=setInterval(quartz,1000);
+
+
+
+
+
+        // function cdloop(){
+        //     pos_s=0;
+        //     // pos_m=0;
+        //     // pos_h=0;
+        //     function cdtime(){
+        //         x=pos_s * 6;  
+        //         y=Math.floor(x/360)*30; // 將秒數x除以60  60/60=1及一分鐘
+        //         z=Math.floor(y/24);  //同上，算出小時
+        //         document.getElementsByClassName('qsec')[0].style.transform=`rotate(${x}deg)`;
+        //         document.getElementsByClassName('qmin')[0].style.transform=`rotate(${y}deg)`;
+        //         document.getElementsByClassName('qhour')[0].style.transform=`rotate(${z}deg)`;
+        //         pos_s++;
+        //         // pos_m++;
+        //         // pos_h++; 
+        //         }
+        //     var loop2=setInterval(cdtime,1000);            
+        // }
+
+
+        function ctl(who) {
+            switch ( who.textContent) {
+                case "STOP":
+                clearInterval(loop);
+                who.textContent="PLAY";
+                cdloop();
+                    break;
+            
+                case "PLAY":
+                clearInterval(loop);
+                // clearInterval(loop2);
+                loop=setInterval(quartz,1000);
+                who.textContent="STOP";
+                    break;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+            // if(who.textContent=="STOP"){
+            //     clearInterval(loop);
+            //     who.textContent="PLAY";
+            //     cdloop();
+            // }
+            // else if(who.textContent=="PLAY"){
+            //     clearInterval(loop2);
+            //     quartz();
+            //     who.textContent="STOP";
+            // }
+        }
+
+
+
+
+ 
+
+
+
+
+    </script>
+</body>
+</html>
